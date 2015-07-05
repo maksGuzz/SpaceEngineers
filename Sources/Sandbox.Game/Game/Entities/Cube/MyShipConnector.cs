@@ -1354,5 +1354,24 @@ namespace Sandbox.Game.Entities.Cube
         {
             get { return m_other; }
         }
+
+        Vector3D IMyShipConnector.ConstraintWorld
+        {
+            // ConstraintPositionInGridSpace()
+            // ConstraintAxisGridSpace()
+            get {
+                var t_cubeCenter = (Max + Min) * CubeGrid.GridSize * 0.5f;
+                var t_centerOffset = ConnectionPosition - t_cubeCenter;
+                return t_centerOffset;
+                //return ConstraintAxisGridSpace();
+                //return Vector3.Transform(ConstraintAxisGridSpace(), CubeGrid.PositionComp.WorldMatrix);
+                return Vector3.Transform(t_centerOffset, CubeGrid.PositionComp.WorldMatrix);
+            }
+        }
+
+        Vector3D IMyShipConnector.PositionWorld
+        {
+            get { return ConstraintPositionWorld(); }
+        }
     }
 }
